@@ -17,14 +17,15 @@ const helmet = require("helmet");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
-mongoose.connect(process.env.MONGODB_URL, {
+var app = express();
+
+const mongoDB = process.env.MONGODB_URI;
+mongoose.connect(mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
-var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
