@@ -1,0 +1,55 @@
+doctype html
+html(lang='en')
+head
+  title SendMoods
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='/stylesheets/style.css')
+
+if user
+  nav(class="bg-slate-800")
+    div(class= "")
+      div(class= "flex justify-between h-16 px-10 shadow items-center")
+        div(class= "flex items-center space-x-8")
+          a(href="/" class= "text-xl text-white lg:text-2xl font-bold cursor-pointer") SendMoods
+          div(class="hidden md:flex justify-around space-x-4")
+            a(href="/" class="hover:text-white text-gray-500") Messages
+        if user.membership_status==true
+          div(class="flex space-x-4 items-center")
+            if user.admin_status==true
+              div(class="flex space-x-2 ")
+                div(class="text-white font-bold") Membership: 
+                div(class="text-orange-500 font-bold") ADMIN
+            else    
+              div(class="flex space-x-2 ")
+                div(class="text-white font-bold") Membership: 
+                div(class="text-lime-300 font-bold") Active
+            a(href="/log-out" class="text-gray-500 text-md") Log Out
+            a(href="/" class="text-white font-bold") #{user.username}
+        else
+          div(class="flex space-x-4 items-center")
+            div(class="flex space-x-2 ")
+              div(class="text-white font-bold") Membership: 
+              div(class="text-red-400 font-bold") Inactive
+            a(href="/join" class="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm") Join Club
+            a(href="/log-out" class="text-gray-500 text-md") Log Out
+            a(href="/" class="text-white font-bold") #{user.username}
+            
+          
+else
+  nav(class="bg-slate-800") 
+    div(class= "")
+      div(class= "flex justify-between h-16 px-10 shadow items-center")
+        div(class= "flex items-center space-x-8")
+          a(href="/" class= "text-xl text-white lg:text-2xl font-bold cursor-pointer") SendMoods
+          div(class="hidden md:flex justify-around space-x-4")
+            a(href="/" class="hover:text-white text-gray-500") Messages
+        div(class="flex space-x-4 items-center")
+          div(class="flex space-x-2 ")
+            div(class="text-white font-bold") You are not logged in 
+          a(href="/log-in" class="text-gray-500 text-md") Log In
+          a(href="/sign-up" class="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm") Sign Up
+        
+    
+
+block content

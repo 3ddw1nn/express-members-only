@@ -1,0 +1,36 @@
+extends layout
+
+block content
+    body(class="bg-slate-900")
+        div(class=" mt-10 text-white text-3xl flex justify-center font-bold")
+            h3 #{title}
+        div(class="flex justify-center")
+            div(class="py-6 px-8 w-96 h-fit mt-20 bg-slate-600 rounded shadow-xl")
+                form(action="" method="POST" enctype="multipart/form-data")
+                    div(class="mb-6")
+                        label(for="first_name" class="block text-gray-300 font-bold") First Name:
+                        input#first_name(type="text" name="first_name" placeholder="first name" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
+                    div(class="mb-6")
+                        label(for="last_name" class="block text-gray-300 font-bold") Last Name:
+                        input#last_name(type="text" name="last_name" placeholder="last name" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
+                    div(class="mb-6")
+                        label(for="username" class="block text-gray-300 font-bold") Username:
+                        input#username(type="text" name="username" placeholder="username" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
+                    div(class="mb-6")
+                        label(for="password" class="block text-gray-300 font-bold") Password:
+                        input#password(type="password" name="password" placeholder="Create a password" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
+                    div(class="mb-6")
+                        label(for="passwordConfirmation" class="block text-gray-300 font-bold") Confirm Password:
+                        input#passwordConfirmation(type="password" name="passwordConfirmation" placeholder="Confirm password" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
+                    div(class="mb-6")
+                        label(for='image') Upload Profile Picture:
+                        input#image(type='file' name='image' required='false' )
+                    button(type="submit" class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded") Sign Up
+        if errors
+            ul(class="mt-20 flex justify-center")
+            for error in errors
+                li(class="text-white") #{error.msg}      
+
+                    //-                 div(class="mt-1")
+                    //-   label(for="confirm-password" class="block text-gray-300 font-bold") Confirm Password:
+                    //-   input(type="text" name="confirm-password" id="confirm-password" placeholder="" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
