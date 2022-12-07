@@ -11,6 +11,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
+const compression = require("compression");
+const helmet = require("helmet");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -28,6 +30,8 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+app.use(compression()); // Compress all routes
+app.use(helmet());
 //upload middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
