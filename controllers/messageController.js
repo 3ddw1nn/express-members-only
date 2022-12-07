@@ -17,9 +17,6 @@ exports.index = (req, res) => {
         user: req.user,
         messages,
       });
-      res.render("layout", {
-        user: req.user,
-      });
     });
 };
 
