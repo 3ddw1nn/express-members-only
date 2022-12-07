@@ -1,25 +1,48 @@
 extends layout
 
 block content
-  body(class="bg-slate-900")
-    if user
-      div(class="mt-10 flex justify-center")
-        h1(class="text-white") #{title}
+  if user
+    div(class="mt-10 flex justify-center")
+      h1(class="text-white") #{title}
 
-      div(class="mb-10 flex justify-center")
-        form(class="flex flex-col w-3/6" method="POST" action="/")
-          div(class="mb-6")
-            label(class="text-white" for='message_title') Message Title:
-            input(type="message_title" name="message_title" id="message_title" placeholder="Enter a message title" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
-          div(class="mb-6")
-            label(class="text-white" for='text') Message:
-            textarea(class="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" id="text" placeholder="Enter your message" name="text" rows="5" cols="40")
-          button(class="cursor-pointer py-2 px-4 block bg-indigo-500 text-white font-bold w-full text-center rounded" type='submit') Submit
-      if errors
+    div(class="mb-10 flex justify-center")
+      form(class="flex flex-col w-3/6" method="POST" action="/")
+        div(class="mb-6")
+          label(class="text-white" for='message_title') Message Title:
+          input(type="message_title" name="message_title" id="message_title" placeholder="Enter a message title" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
+        div(class="mb-6")
+          label(class="text-white" for='text') Message:
+          textarea(class="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" id="text" placeholder="Enter your message" name="text" rows="5" cols="40")
+        button(class="cursor-pointer py-2 px-4 block bg-indigo-500 text-white font-bold w-full text-center rounded" type='submit') Submit
+    if errors
+      ul
+        for error in errors
+          li(class="text-white") #{error.msg}
+    if user.admin_status==true
+      if (messages)
         ul
-          for error in errors
-            li(class="text-white") #{error.msg}
-      if user.admin_status==true
+          each message in messages
+              div(class=" bg-gray-800 w-2/3 mx-auto p-8 mb-6 rounded-2xl")
+                div(class="flex flex-col items-center justify-center md:items-start md:flex-row")
+                  a(href="#" class="relative block")
+                  -var test= message.user.image
+                  img( alt="profile" src= test class = "mt-8 mx-auto object-cover rounded-full h-40 w-40")
+                  div(class="w-full md:w-2/3")
+                    p(class="text-white dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-3xl") #{message.message_title}
+                    p(class="text-gray-600 dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-xl") #{message.text}
+                    div(class="flex items-center w-1/2 mt-8 mb-8")
+                      if message.user.admin_status==true
+                        span(class="mr-2 text-lg font-semibold text-orange-500") #{message.user.full_name}
+                      else
+                        if message.user.membership_status==true 
+                          span(class="mr-2 text-lg font-semibold text-lime-500") #{message.user.full_name}
+                        else 
+                          span(class="mr-2 text-lg font-semibold text-indigo-500") #{message.user.full_name}                          
+                      span(class="text-xl font-light text-gray-400") /
+                      span(class="ml-2 text-gray-400 text-md") #{message.date_formatted}
+                    a(href=`/message/${message._id}/delete` class="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm") Delete
+    else
+      if user.membership_status==true
         if (messages)
           ul
             each message in messages
@@ -31,64 +54,17 @@ block content
                     div(class="w-full md:w-2/3")
                       p(class="text-white dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-3xl") #{message.message_title}
                       p(class="text-gray-600 dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-xl") #{message.text}
-                      div(class="flex items-center w-1/2 mt-8 mb-8")
+                      div(class="flex items-center w-1/2 mt-8")
                         if message.user.admin_status==true
                           span(class="mr-2 text-lg font-semibold text-orange-500") #{message.user.full_name}
                         else
                           if message.user.membership_status==true 
                             span(class="mr-2 text-lg font-semibold text-lime-500") #{message.user.full_name}
                           else 
-                            span(class="mr-2 text-lg font-semibold text-indigo-500") #{message.user.full_name}                          
+                            span(class="mr-2 text-lg font-semibold text-indigo-500") #{message.user.full_name} 
                         span(class="text-xl font-light text-gray-400") /
                         span(class="ml-2 text-gray-400 text-md") #{message.date_formatted}
-                      a(href=`/message/${message._id}/delete` class="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm") Delete
       else
-        if user.membership_status==true
-          if (messages)
-            ul
-              each message in messages
-                  div(class=" bg-gray-800 w-2/3 mx-auto p-8 mb-6 rounded-2xl")
-                    div(class="flex flex-col items-center justify-center md:items-start md:flex-row")
-                      a(href="#" class="relative block")
-                      -var test= message.user.image
-                      img( alt="profile" src= test class = "mt-8 mx-auto object-cover rounded-full h-40 w-40")
-                      div(class="w-full md:w-2/3")
-                        p(class="text-white dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-3xl") #{message.message_title}
-                        p(class="text-gray-600 dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-xl") #{message.text}
-                        div(class="flex items-center w-1/2 mt-8")
-                          if message.user.admin_status==true
-                            span(class="mr-2 text-lg font-semibold text-orange-500") #{message.user.full_name}
-                          else
-                            if message.user.membership_status==true 
-                              span(class="mr-2 text-lg font-semibold text-lime-500") #{message.user.full_name}
-                            else 
-                              span(class="mr-2 text-lg font-semibold text-indigo-500") #{message.user.full_name} 
-                          span(class="text-xl font-light text-gray-400") /
-                          span(class="ml-2 text-gray-400 text-md") #{message.date_formatted}
-        else
-          if (messages)
-            ul
-              each message in messages
-                  div(class=" bg-gray-800 w-2/3 mx-auto p-8 mb-6 rounded-2xl")
-                    div(class="flex flex-col items-center justify-center md:items-start md:flex-row")
-                      a(href="#" class="relative block")
-                      -var test= message.user.image
-                      img( alt="profile" src= test class = "mt-8 mx-auto object-cover rounded-full h-40 w-40")
-                      div(class="w-full md:w-2/3")
-                        p(class="text-white dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-3xl") #{message.message_title}
-                        p(class="text-gray-600 dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-xl") #{message.text}
-                        div(class="flex items-center w-1/2 mt-8")
-                          if message.user.admin_status==true
-                            span(class="mr-2 text-lg font-semibold text-orange-500") #{message.user.username}
-                          else
-                            if message.user.membership_status==true 
-                              span(class="mr-2 text-lg font-semibold text-lime-500") #{message.user.username}
-                            else 
-                              span(class="mr-2 text-lg font-semibold text-indigo-500") #{message.user.username} 
-    else 
-      div(class="mt-10 flex justify-center")
-        h1(class="text-white") #{title}
-      div(class="messages mt-10")
         if (messages)
           ul
             each message in messages
@@ -108,6 +84,29 @@ block content
                             span(class="mr-2 text-lg font-semibold text-lime-500") #{message.user.username}
                           else 
                             span(class="mr-2 text-lg font-semibold text-indigo-500") #{message.user.username} 
-        else
-          p(class="text-white") There are no Messages
-                  
+  else 
+    div(class="mt-10 flex justify-center")
+      h1(class="text-white") #{title}
+    div(class="messages mt-10")
+      if (messages)
+        ul
+          each message in messages
+              div(class=" bg-gray-800 w-2/3 mx-auto p-8 mb-6 rounded-2xl")
+                div(class="flex flex-col items-center justify-center md:items-start md:flex-row")
+                  a(href="#" class="relative block")
+                  -var test= message.user.image
+                  img( alt="profile" src= test class = "mt-8 mx-auto object-cover rounded-full h-40 w-40")
+                  div(class="w-full md:w-2/3")
+                    p(class="text-white dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-3xl") #{message.message_title}
+                    p(class="text-gray-600 dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-xl") #{message.text}
+                    div(class="flex items-center w-1/2 mt-8")
+                      if message.user.admin_status==true
+                        span(class="mr-2 text-lg font-semibold text-orange-500") #{message.user.username}
+                      else
+                        if message.user.membership_status==true 
+                          span(class="mr-2 text-lg font-semibold text-lime-500") #{message.user.username}
+                        else 
+                          span(class="mr-2 text-lg font-semibold text-indigo-500") #{message.user.username} 
+      else
+        p(class="text-white") There are no Messages
+                

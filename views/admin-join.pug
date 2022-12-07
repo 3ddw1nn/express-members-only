@@ -1,13 +1,12 @@
 extends layout
 
 block content    
-    body(class="bg-slate-900")
-        div(class=" mt-10 text-white text-3xl flex justify-center font-bold")
-            h3 Join Admin
-        div(class="flex justify-center")
-            div(class="py-6 px-8 w-1/4 h-fit mt-20 bg-slate-600 rounded shadow-xl")
-                form(action="" method="POST")
-                    div(class="mb-6")
-                        label(for="admin_code" class="block text-gray-300 font-bold") Enter Admin Code:
-                        input(type="text" name="admin_code" id="admin_code" placeholder="Enter Admin Code" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
-                    button(type="submit" class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded") Join Admin
+    div(class=" mt-10 text-white text-3xl flex justify-center font-bold")
+        h3 Join Admin
+    div(class="flex justify-center")
+        div(class="py-6 px-8 w-1/4 h-fit mt-20 bg-slate-600 rounded shadow-xl")
+            form(action="" method="POST")
+                div(class="mb-6")
+                    label(for="admin_code" class="block text-gray-300 font-bold") Enter Admin Code:
+                    input(type="text" name="admin_code" id="admin_code" placeholder="Enter Admin Code" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600")
+                button(type="submit" class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded") Join Admin

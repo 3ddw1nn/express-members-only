@@ -1,15 +1,14 @@
 extends layout
 
 block content
-    body(class="bg-slate-900")
-        P(class="text-white dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-3xl") #{title}: #{message.message_title}
-        p(class="text-gray-600 dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-xl") #{message.text}
-        p Do you really want to delete this Message?
+    p(class="text-white dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-3xl") #{title}: #{message.message_title}
+    p(class="text-gray-600 dark:text-white w-full md:w-2/3 ml-1 text-left text-lg md:text-xl") #{message.text}
+    p Do you really want to delete this Message?
 
-        form(method='POST' action='')
+    form(method='POST' action='')
+        div.form-group
+            input#messageid.form-control(type='hidden',name='messageid', required='true', value=message._id )
             div.form-group
-                input#messageid.form-control(type='hidden',name='messageid', required='true', value=message._id )
-                div.form-group
-                    button(type="submit" class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded") Delete 
-                    a(href="/" class="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm") Cancel
-        
+                button(type="submit" class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded") Delete 
+                a(href="/" class="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm") Cancel
+    
